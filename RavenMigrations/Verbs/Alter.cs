@@ -14,8 +14,9 @@ namespace RavenMigrations.Verbs
 
     public class Alter
     {
-        public Alter(IDocumentStore documentStore)
+        public Alter(IDocumentStore documentStore, ILogger logger)
         {
+            Logger = logger;
             DocumentStore = documentStore;
         }
 
@@ -99,12 +100,16 @@ namespace RavenMigrations.Verbs
                 if (cmds.Count == pageSize)
                 {
                     DocumentStore.DatabaseCommands.Batch(cmds.ToArray());
+                	Logger.WriteInformation("Updated {0} documents", cmds.Count);
                     cmds.Clear();
                 }
             }
 
             if (cmds.Count > 0)
+			{
                 DocumentStore.DatabaseCommands.Batch(cmds.ToArray());
+				Logger.WriteInformation("Updated {0} documents", cmds.Count);
+			}
         }
 
         /// <summary>
@@ -123,6 +128,7 @@ namespace RavenMigrations.Verbs
         }
 
         protected IDocumentStore DocumentStore { get; private set; }
+        protected ILogger Logger { get; private set; }
 
         internal class TemporaryMigrationIndex : AbstractIndexCreationTask
         {

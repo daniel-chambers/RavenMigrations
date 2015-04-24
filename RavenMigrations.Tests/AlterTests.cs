@@ -22,7 +22,7 @@ namespace RavenMigrations.Tests
                 InitialiseWithPerson(store, "Sean Kearon");
 
                 var migration = new AlterCollectionMigration();
-                migration.Setup(store);
+                migration.Setup(store, new NullLogger());
 
                 migration.Up();
                 WaitForIndexing(store);
@@ -46,7 +46,7 @@ namespace RavenMigrations.Tests
                 InitialiseWithPerson(store, "Sean Kearon");
 
                 var migration = new AlterCollectionMigration();
-                migration.Setup(store);
+                migration.Setup(store, new NullLogger());
 
                 migration.Up();
                 WaitForIndexing(store);
@@ -72,7 +72,7 @@ namespace RavenMigrations.Tests
                 Thread.Sleep(50);
 
                 var migration = new AlterCollectionSubsetMigration();
-                migration.Setup(store);
+                migration.Setup(store, new NullLogger());
 
                 migration.Up();
                 WaitForIndexing(store);
@@ -102,7 +102,7 @@ namespace RavenMigrations.Tests
                 Thread.Sleep(50);
 
                 var migration = new AlterCollectionUsingTempIndexMigration();
-                migration.Setup(store);
+                migration.Setup(store, new NullLogger());
 
                 migration.Up();
                 WaitForIndexing(store);
